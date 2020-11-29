@@ -1,0 +1,65 @@
+.connect {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 10px;
+  margin: 4.5rem 10vw;
+}
+
+.card {
+  cursor: pointer;
+  display: inline-block;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  margin: 1em 1.5%;
+  animation: scl 0.5s ease-in-out;
+  transform-origin: left center;
+  background-color: #fff;
+  border-radius: 18px;
+}
+.card-title {
+  display: block;
+  text-align: center;
+  color: #222;
+  font-size: 2em;
+}
+.card-image {
+  display: block;
+  margin: 10px auto;
+  padding: auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.card-action button {
+  margin-bottom: 5px;
+}
+.card-desc {
+  padding: 0 1em 1em 1em;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.7);
+  display: block;
+  text-align: center;
+  height: 100px;
+}
+.card-action-readMore {
+  height: 3em;
+  width: 8em;
+  background: #1e90ff;
+  border: none;
+  font-weight: light;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  border-radius: 9px;
+  display: block;
+  margin: 10px auto;
+}
+.card-action-readMore:hover {
+  background: #0076ce;
+  transition: all 0.1s ease-in;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease-in;
+}

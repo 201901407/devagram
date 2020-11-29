@@ -1,0 +1,32 @@
+.content__container {
+  display: flex;
+  margin: 2rem 8rem;
+  overflow-x: hidden;
+}
+.content {
+  width: 100%;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@media (max-width: 1401px) {
+  .content__container {
+    margin: 2rem 4rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .content__container {
+    margin: 2rem;
+  }
+  .content {
+    padding: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .content__container {
+    margin: 2rem 0.5rem;
+  }
+}

@@ -1,84 +1,100 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 
 import Title from "../Title/Title";
 import Button from "../../Button/Button";
 import Input from "../Input/Input";
-import useHandleChange from "../../Hooks/HandleInputChange";
 import { Link } from "react-router-dom";
 import classes from "./Signup.module.css";
 import GoogleAuth from "../GoogleAuth/GoogleAuth";
+import { connect } from "react-redux";
+import { authUser } from "../../../actions";
+import Loader from "../../Loader/Loader";
 
-const Signup = () => {
-  const [email, setEmail] = useHandleChange();
-  const [name, setName] = useHandleChange();
-  const [username, setUsername] = useHandleChange();
-  const [password, setPassword] = useHandleChange();
+const INITIAL_STATE_FORM_STATE = {
+  email: "",
+  name: "",
+  username: "",
+  password: "",
+};
+
+const Signup = ({ auth: { error, isAuth, loading }, registerUser }) => {
+  const [formValues, setFormValues] = useState({ ...INITIAL_STATE_FORM_STATE });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = (e) => {
-    /* To make the api call to post the user data once submitted */
-
     e.preventDefault();
-    const formData = {
-      email: email,
-      fullname: name,
-      username: username,
-      password: password,
-    };
 
-    console.log(formData);
-
-    setEmail("");
-    setName("");
-    setUsername("");
-    setPassword("");
+    registerUser(formValues, true);
+    setFormValues({ ...INITIAL_STATE_FORM_STATE });
   };
 
   return (
     <div className={classes["signup-container"]}>
       <Title title="Devagram" />
-
-      <p className={classes.desc}>Sign up to experience the Developer Hub.</p>
+      <p className={classes.desc}>
+        {error ? error : "Sign up to experience the Developer Hub."}
+      </p>
 
       <form className={classes["signup-form"]} onSubmit={handleSubmit}>
-        <Input
-          aria-labelledby="label-email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={setEmail}
-          required
-        />
-        <Input
-          aria-labelledby="label-fullname"
-          type="text"
-          name="name"
-          value={name}
-          onChange={setName}
-          required
-        />
-        <Input
-          aria-labelledby="label-username"
-          type="text"
-          name="username"
-          value={username}
-          onChange={setUsername}
-          required
-        />
-        <Input
-          aria-labelledby="label-password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={setPassword}
-          required
-        />
-        <Button
-          type="submit"
-          btnType="Primary"
-          disabled={!(email && name && username && password)}
-        >
-          Sign Up
-        </Button>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Fragment>
+            <Input
+              aria-labelledby="label-email"
+              type="email"
+              name="email"
+              value={formValues.email}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              aria-labelledby="label-fullname"
+              type="text"
+              name="name"
+              value={formValues.name}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              aria-labelledby="label-username"
+              type="text"
+              name="username"
+              value={formValues.username}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              aria-labelledby="label-password"
+              type="password"
+              name="password"
+              value={formValues.password}
+              onChange={handleChange}
+              required
+            />
+            <Button
+              type="submit"
+              btnType="Primary"
+              disabled={
+                !(
+                  formValues.email &&
+                  formValues.name &&
+                  formValues.username &&
+                  formValues.password
+                )
+              }
+            >
+              Sign Up
+            </Button>
+          </Fragment>
+        )}
       </form>
 
       <h5 style={{ color: "#808080" }}>OR</h5>
@@ -90,4 +106,12 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  registerUser: (authData, isSignup) => dispatch(authUser(authData, isSignup)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

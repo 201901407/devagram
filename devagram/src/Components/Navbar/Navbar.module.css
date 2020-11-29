@@ -1,60 +1,148 @@
-nav {
-  position: sticky;
+.Navbar {
+  position: fixed;
   top: 0;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgb(165, 165, 165);
+  background-color: white;
   z-index: 2;
 }
-.Navbar {
+.NavContent {
+  margin: 0.5em 0;
   display: flex;
-  width: 100%;
+  width: 80vw;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background: #a8f0f0;
-  border-bottom: 1px solid gray;
 }
-
 .Search {
   position: relative;
+  margin: 0 2em;
+  display: flex;
+  min-width: 300px;
+  align-items: center;
 }
 .Search input {
   height: 100%;
   width: 100%;
   padding: 0.5rem 1rem;
   border-radius: 5px;
+  max-width: 50vw;
   outline: none;
   border: 1px solid #ddd;
-}
-.Search input:focus {
-  border-width: 2px;
-}
-.Search svg {
-  position: absolute;
-  right: 10px;
-  top: 25%;
+  align-items: center;
+  font-weight: 700;
+  color: #5a5a5a;
 }
 
+.Search svg {
+  position: relative;
+  top: -2px;
+  left: -40px;
+}
 .Options {
   display: flex;
 }
 .Option {
-  margin: 0 0.5rem;
-  font-size: 1.5rem;
+  margin: 0 0.8rem;
+  font-size: 1.5em;
 }
-.Profile {
-  height: 1.5rem;
-  width: 1.5rem;
-  border-radius: 50%;
-  overflow: hidden;
+.Burger {
+  display: none;
 }
-.Profile img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+.SmallScreen,
+.ProfileOptions {
+  position: absolute;
+  top: 3.8rem;
+  right: 1rem;
+  background: #eee;
+  padding: 1rem;
+  border-radius: 5px;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: all 200ms;
+}
+.ProfileOptions {
+  right: 10vw;
+  top: 3rem;
+}
+.SmallScreen a,
+.ProfileOptions a {
+  display: block;
+  color: black;
+  padding: 0.25rem;
+}
+.ProfileOption:nth-of-type(2) {
+  display: none;
+}
+.Open {
+  opacity: 1 !important;
+  transform: scaleY(1) !important;
+  transition: all 200ms;
+}
+.SmallScreen .SmallOption + .SmallOption,
+.ProfileOptions .ProfileOption + .ProfileOption {
+  border-top: 1px solid gray;
+}
+.SmallScreen a span,
+.ProfileOptions a span {
+  margin-left: 0.5rem;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .Search {
     display: none;
+  }
+  .ProfileOption:nth-of-type(2) {
+    display: block;
+  }
+}
+@media (max-width: 850px) {
+  .Burger {
+    display: block;
+    font-size: 2em;
+  }
+  .Option {
+    display: none;
+  }
+  .ProfileOptions {
+    position: absolute;
+    top: 94vh;
+    left: 0;
+    width: 100%;
+    background: #eee;
+    padding: 1rem;
+    transform: scaleY(1);
+    opacity: 1;
+    border-radius: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    border-top: 1px solid gray;
+  }
+  .ProfileOption a {
+    color: gray;
+  }
+  .ProfileOptions .ProfileOption + .ProfileOption {
+    border-top: none !important;
+  }
+  .ProfileOption span {
+    display: none;
+  }
+  .ProfileOption.selected a {
+    color: black !important;
+  }
+}
+@media (max-height: 750px) {
+  .ProfileOptions {
+    top: 93vh;
+  }
+}
+@media (max-height: 650px) {
+  .ProfileOptions {
+    top: 92.5vh;
   }
 }
